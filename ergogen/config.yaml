@@ -41,6 +41,9 @@ units:
   mounting_hole_r: 1
   clearance_hole_r: 1.6
   cover_hole_margin: 3  # Inset from the edge
+  casewall: 2 # thickness of case wall
+  case_kx: outer_kx + 2casewall
+  case_ky: outer_ky + 2casewall
 
   # bump the top-center of the mcu cover down to match the master angle
   cover_bump_top: -4
@@ -388,7 +391,100 @@ outlines:
         - ref: matrix_pinky_bottom
           shift: [-0.5outer_kx,-0.5outer_ky]
       fillet: 2
-  
+
+  case1: 
+    - what: polygon
+      operation: stack
+      points:
+        - ref: matrix_pinky_home
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: matrix_pinky_home
+          shift: [0.5px+casewall,0.5case_ky]
+        - ref: matrix_ring_top
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: matrix_ring_top
+          shift: [0.5px+casewall,0.5case_ky]
+        - ref: matrix_middle_top
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: matrix_middle_top
+          shift: [0.5case_kx,0.5case_ky]
+        - ref: matrix_index_top
+          shift: [-0.5px+3-casewall,0.5case_ky]
+        - ref: matrix_index_top
+          shift: [0.5case_kx,0.5case_ky]
+        - ref: matrix_inner_top
+          shift: [-0.5px+5-casewall,0.5case_ky]
+        - ref: matrix_inner_top
+          shift: [0.5case_kx,0.5case_ky]
+
+        - ref: matrix_inner_top
+          shift: [0.5case_kx,-2+casewall]
+        - ref: mirror_matrix_inner_top
+          shift: [0.5case_kx,-2+casewall]
+
+        - ref: mirror_matrix_inner_top
+          shift: [0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_inner_top
+          shift: [-0.5px+5-casewall,0.5case_ky]
+        - ref: mirror_matrix_index_top
+          shift: [0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_index_top
+          shift: [-0.5px+3-casewall,0.5case_ky]
+        - ref: mirror_matrix_middle_top
+          shift: [0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_middle_top
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_ring_top
+          shift: [0.5px+casewall,0.5case_ky]
+        - ref: mirror_matrix_ring_top
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_pinky_home
+          shift: [0.5px+casewall,0.5case_ky]
+        - ref: mirror_matrix_pinky_home
+          shift: [-0.5case_kx,0.5case_ky]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [-0.5case_kx,-0.5case_ky]
+        - ref: mirror_matrix_pinky_bottom
+          shift: [0.5case_kx,-0.5case_ky]
+
+        
+        - ref: mirror_thumbs_home_thumb
+          shift: [-0.5case_kx,0-casewall]
+        - ref: mirror_thumbs_home_thumb
+          shift: [-0.5case_kx,-0.5case_ky]
+
+        - ref.aggregate.parts: [mirror_thumbs_home_thumb, mirror_thumbs_reachy_thumb]
+          shift: [0,-0.5case_ky]
+
+        - ref: mirror_thumbs_reachy_thumb
+          shift: [0.5case_kx,-0.5case_ky]
+
+        - ref: mirror_thumbs_reachy_thumb
+          shift: [0.5case_kx,0-casewall]
+
+        - ref.aggregate.parts: [mirror_thumbs_reachy_thumb, thumbs_reachy_thumb]
+          shift: [0,0-casewall]
+
+        - ref: thumbs_reachy_thumb
+          shift: [0.5case_kx,0-casewall]  
+
+        - ref: thumbs_reachy_thumb
+          shift: [0.5case_kx,-0.5case_ky]
+
+        - ref.aggregate.parts: [thumbs_reachy_thumb, thumbs_home_thumb]
+          shift: [0,-0.5case_ky]
+
+        - ref: thumbs_home_thumb
+          shift: [-0.5case_kx,-0.5case_ky]
+        - ref: thumbs_home_thumb
+          shift: [-0.5case_kx, 0-casewall]
+
+        - ref: matrix_pinky_bottom
+          shift: [0.5case_kx,-0.5case_ky]
+
+        - ref: matrix_pinky_bottom
+          shift: [-0.5case_kx,-0.5case_ky]
+      fillet: 2
 
   raw:
     - what: rectangle
@@ -594,3 +690,29 @@ pcbs:
 
 
 cases:
+  bottom:
+    - name: board
+      extrude: 1
+  caseBottom:
+    - name: case1
+      extrude: 1
+  _outerWall:
+    - name: case1
+      extrude: 4
+  _innerWall:
+    - name: board
+      extrude: 4
+  wall:
+    - what: case
+      name: _outerWall
+      operation: add
+    - what: case
+      name: _innerWall
+      operation: subtract
+  case-complete:
+    - what: case
+      name: caseBottom
+      operation: add
+    - what: case
+      name: wall
+      operation: add
