@@ -33,7 +33,7 @@ units:
   thumb_splay: 7
 
   # Outlines
-  edge_border: 3    # Border around PCB, outside the keycaps' perimeter
+  edge_border: 2    # Border around PCB, outside the keycaps' perimeter
   outer_kx: capw + 2edge_border
   outer_ky: caph + 2edge_border
   xiao_cutout_x: 19.5
@@ -392,126 +392,20 @@ outlines:
           shift: [-0.5outer_kx,-0.5outer_ky]
       fillet: 2
 
-  case1: 
-    - what: polygon
-      operation: stack
-      points:
-        - ref: matrix_pinky_home
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: matrix_pinky_home
-          shift: [0.5px+casewall,0.5case_ky]
-        - ref: matrix_ring_top
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: matrix_ring_top
-          shift: [0.5px+casewall,0.5case_ky]
-        - ref: matrix_middle_top
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: matrix_middle_top
-          shift: [0.5case_kx,0.5case_ky]
-        - ref: matrix_index_top
-          shift: [-0.5px+3-casewall,0.5case_ky]
-        - ref: matrix_index_top
-          shift: [0.5case_kx,0.5case_ky]
-        - ref: matrix_inner_top
-          shift: [-0.5px+5-casewall,0.5case_ky]
-        - ref: matrix_inner_top
-          shift: [0.5case_kx,0.5case_ky]
-
-        - ref: matrix_inner_top
-          shift: [0.5case_kx,-2+casewall]
-        - ref: mirror_matrix_inner_top
-          shift: [0.5case_kx,-2+casewall]
-
-        - ref: mirror_matrix_inner_top
-          shift: [0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_inner_top
-          shift: [-0.5px+5-casewall,0.5case_ky]
-        - ref: mirror_matrix_index_top
-          shift: [0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_index_top
-          shift: [-0.5px+3-casewall,0.5case_ky]
-        - ref: mirror_matrix_middle_top
-          shift: [0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_middle_top
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_ring_top
-          shift: [0.5px+casewall,0.5case_ky]
-        - ref: mirror_matrix_ring_top
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_pinky_home
-          shift: [0.5px+casewall,0.5case_ky]
-        - ref: mirror_matrix_pinky_home
-          shift: [-0.5case_kx,0.5case_ky]
-        - ref: mirror_matrix_pinky_bottom
-          shift: [-0.5case_kx,-0.5case_ky]
-        - ref: mirror_matrix_pinky_bottom
-          shift: [0.5case_kx,-0.5case_ky]
-
-        
-        - ref: mirror_thumbs_home_thumb
-          shift: [-0.5case_kx,0-casewall]
-        - ref: mirror_thumbs_home_thumb
-          shift: [-0.5case_kx,-0.5case_ky]
-
-        - ref.aggregate.parts: [mirror_thumbs_home_thumb, mirror_thumbs_reachy_thumb]
-          shift: [0,-0.5case_ky]
-
-        - ref: mirror_thumbs_reachy_thumb
-          shift: [0.5case_kx,-0.5case_ky]
-
-        - ref: mirror_thumbs_reachy_thumb
-          shift: [0.5case_kx,0-casewall]
-
-        - ref.aggregate.parts: [mirror_thumbs_reachy_thumb, thumbs_reachy_thumb]
-          shift: [0,0-casewall]
-
-        - ref: thumbs_reachy_thumb
-          shift: [0.5case_kx,0-casewall]  
-
-        - ref: thumbs_reachy_thumb
-          shift: [0.5case_kx,-0.5case_ky]
-
-        - ref.aggregate.parts: [thumbs_reachy_thumb, thumbs_home_thumb]
-          shift: [0,-0.5case_ky]
-
-        - ref: thumbs_home_thumb
-          shift: [-0.5case_kx,-0.5case_ky]
-        - ref: thumbs_home_thumb
-          shift: [-0.5case_kx, 0-casewall]
-
-        - ref: matrix_pinky_bottom
-          shift: [0.5case_kx,-0.5case_ky]
-
-        - ref: matrix_pinky_bottom
-          shift: [-0.5case_kx,-0.5case_ky]
-      fillet: 2
-
-  raw:
-    - what: rectangle
-      where: true
-      size: [px, py]
-  
-  keys:
-    - what: rectangle
-      where: true
-      bound: false
-      size: [kx,ky]
-  
-
   keycaps:
     - what: rectangle
       where: key
       size: [capw, caph]
   
-  switch_holes:
+  _switch_holes:
     - what: rectangle
       where: key
-      size: [14 - kerf, 14 - kerf]
+      size: [13.95 - kerf, 13.95 - kerf]
   
  
-  all_mounting_holes:
+  _all_mounting_holes:
     - what: circle
-      where: [mounting_hole_1, mounting_hole_2, mounting_hole_3, mirror_mounting_hole_1, mirror_mounting_hole_2, mirror_mounting_hole_3, mcu_cover_mounting_hole_top, mcu_cover_mounting_hole_bottom]
+      where: [mounting_hole_1, mounting_hole_2, mounting_hole_3, mirror_mounting_hole_1, mirror_mounting_hole_2, mirror_mounting_hole_3, mcu_cover_mounting_hole_top, mcu_cover_mounting_hole_bottom, mirror_mcu_cover_mounting_hole_top, mirror_mcu_cover_mounting_hole_bottom]
       radius: mounting_hole_r
 
   mcu_cover:
@@ -581,23 +475,25 @@ outlines:
 
   top_plate: #need more cut, battery
     - name: board
-    - name: switch_holes
+    - name: _switch_holes
       operation: subtract
     - name: _mcu_cutout
       operation: subtract
     - name: _bat_cutout
       operation: subtract
+    - name:  _all_mounting_holes
+      operation: subtract
 
   combo:
   - name: board
-  - name: keycaps
+ # - name: keycaps
+ #   operation: stack
+  - name: _all_mounting_holes
     operation: stack
-  - name: all_mounting_holes
-    operation: stack
-  - name: mcu_cover
-    operation: stack
-  - name: top_plate
-    operation: stack
+ # - name: mcu_cover
+ #   operation: stack
+ # - name: top_plate
+ #   operation: stack
  # - operation: subtract
  #   name: keys
 
@@ -687,32 +583,3 @@ pcbs:
         where: [mounting_hole]
       
 
-
-
-cases:
-  bottom:
-    - name: board
-      extrude: 1
-  caseBottom:
-    - name: case1
-      extrude: 1
-  _outerWall:
-    - name: case1
-      extrude: 4
-  _innerWall:
-    - name: board
-      extrude: 4
-  wall:
-    - what: case
-      name: _outerWall
-      operation: add
-    - what: case
-      name: _innerWall
-      operation: subtract
-  case-complete:
-    - what: case
-      name: caseBottom
-      operation: add
-    - what: case
-      name: wall
-      operation: add
