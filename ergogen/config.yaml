@@ -497,6 +497,7 @@ outlines:
  # - operation: subtract
  #   name: keys
 
+
 pcbs:
   sterna:
     outlines:
@@ -582,4 +583,9 @@ pcbs:
         what: hole_m2
         where: [mounting_hole]
       
-
+cases:
+  bottom:
+    - name: board
+      extrude: 1
+    - name: _all_mounting_holes
+      extrude: 4
