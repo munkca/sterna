@@ -1,8 +1,8 @@
 file_format: "1"
-id: tern
-name: Tern
+id: sterna
+name: Sterna
 type: shield
-url: https://github.com/rschenk/tern
+url: https://github.com/munkca/sterna
 requires: [seeed_xiao]
 features:
   - keys
