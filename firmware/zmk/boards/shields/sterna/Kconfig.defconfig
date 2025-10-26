@@ -1,9 +1,9 @@
 # Copyright (c) 2022 The ZMK Contributors
 # SPDX-License-Identifier: MIT
 
-if SHIELD_TERN
+if SHIELD_STERNA
 
 config ZMK_KEYBOARD_NAME
-    default "Tern"
+    default "Sterna"
 
 endif
